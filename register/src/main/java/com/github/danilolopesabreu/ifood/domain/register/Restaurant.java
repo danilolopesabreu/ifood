@@ -20,23 +20,89 @@ public class Restaurant {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	public Long id;
+	private Long id;
 	
-	public String owner;
+	private String owner;
 	
-	public String cnpj;
+	private String fein;// Federal Employer Identification Number
 	
-	public String name;
+	private String name;
 	
 	@OneToOne
-	public Location location;
+	private Location location;
 	
 	@OneToMany
-	public List<Dish> dishes;
+	private List<Dish> dishes;
 	
 	@CreationTimestamp
-	public Date creationDate;
+	private Date creationDate;
 	
 	@UpdateTimestamp
-	public Date updateDate;
+	private Date updateDate;
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getOwner() {
+		return owner;
+	}
+
+	public void setOwner(String owner) {
+		this.owner = owner;
+	}
+
+	public String getFein() {
+		return fein;
+	}
+
+	public void setFein(String fein) {
+		this.fein = fein;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public Location getLocation() {
+		return location;
+	}
+
+	public void setLocation(Location location) {
+		this.location = location;
+	}
+
+	public List<Dish> getDishes() {
+		return dishes;
+	}
+
+	public void setDishes(List<Dish> dishes) {
+		this.dishes = dishes;
+	}
+
+	public Date getCreationDate() {
+		return creationDate;
+	}
+
+	public void setCreationDate(Date creationDate) {
+		this.creationDate = creationDate;
+	}
+
+	public Date getUpdateDate() {
+		return updateDate;
+	}
+
+	public void setUpdateDate(Date updateDate) {
+		this.updateDate = updateDate;
+	}
+	
+	
 }
