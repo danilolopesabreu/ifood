@@ -1,8 +1,8 @@
-package com.github.danilolopesabreu.ifood.infrastructure.register;
+package com.github.danilolopesabreu.ifood.infrastructure.restaurant;
 
 import javax.enterprise.context.ApplicationScoped;
 
-import com.github.danilolopesabreu.ifood.domain.register.Restaurant;
+import com.github.danilolopesabreu.ifood.domain.restaurant.Restaurant;
 
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
 
