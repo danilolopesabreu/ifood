@@ -50,6 +50,10 @@ public class Restaurant {
 	@UpdateTimestamp
 	private Date updateDate;
 
+	public void referenceRestaurantLocation() {
+		this.location.setRestaurant(this);
+	}
+	
 	public Long getId() {
 		return id;
 	}

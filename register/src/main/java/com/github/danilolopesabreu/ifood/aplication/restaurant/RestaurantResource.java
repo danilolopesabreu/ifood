@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import javax.inject.Inject;
 import javax.transaction.Transactional;
+import javax.validation.Valid;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -47,21 +48,22 @@ public class RestaurantResource {
 	
 	@POST
 	@Transactional
-	public void create(final RestaurantDTO dto) {
+	public void create(@Valid final RestaurantDTO dto) {
 		final Restaurant objRestaurant = this.restaurantMapper.toRestaurant(dto);
-		objRestaurant.getLocation().setRestaurant(objRestaurant);
+		objRestaurant.referenceRestaurantLocation();
 		restaurantPanacheRepository.persist(objRestaurant);
 	}
 	
 	@GET
 	public List<RestaurantDTO> read() {
-		return this.restaurantMapper.fromRestaurants(restaurantPanacheRepository.listAll());
+		return this.restaurantMapper.toRestaurantsDTO(restaurantPanacheRepository.listAll());
 	}
 	
 	@PUT
 	@Path("{id}")
 	@Transactional
 	public void update(@PathParam("id") Long id, RestaurantDTO dto) {
+		
 		Optional<Restaurant> restaurantOp = restaurantPanacheRepository.findByIdOptional(id);
 		
 		if(restaurantOp.isEmpty()) {
@@ -70,7 +72,7 @@ public class RestaurantResource {
 		
 		Restaurant objRestaurant = restaurantOp.get();		
 		
-		objRestaurant.setName(dto.getName());
+		restaurantMapper.toRestaurantUpdate(dto, objRestaurant);
 		
 		restaurantPanacheRepository.persist(objRestaurant);		
 	}
