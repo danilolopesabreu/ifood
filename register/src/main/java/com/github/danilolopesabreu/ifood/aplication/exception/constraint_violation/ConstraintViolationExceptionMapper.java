@@ -1,4 +1,4 @@
-package com.github.danilolopesabreu.ifood.aplication.exception.constraintviolation;
+package com.github.danilolopesabreu.ifood.aplication.exception.constraint_violation;
 
 import javax.validation.ConstraintViolationException;
 import javax.ws.rs.core.Response;

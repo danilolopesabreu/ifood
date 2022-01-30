@@ -22,7 +22,7 @@ import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 
-import com.github.danilolopesabreu.ifood.aplication.exception.constraintviolation.ConstraintViolationResponse;
+import com.github.danilolopesabreu.ifood.aplication.exception.constraint_violation.ConstraintViolationResponse;
 import com.github.danilolopesabreu.ifood.aplication.restaurant.dto.DishDTO;
 import com.github.danilolopesabreu.ifood.aplication.restaurant.dto.RestaurantDTO;
 import com.github.danilolopesabreu.ifood.aplication.restaurant.mapper.DishMapper;

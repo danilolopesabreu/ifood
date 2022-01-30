@@ -1,4 +1,4 @@
-package com.github.danilolopesabreu.ifood.aplication.exception.constraintviolation;
+package com.github.danilolopesabreu.ifood.aplication.exception.constraint_violation;
 
 import java.util.ArrayList;
 import java.util.List;

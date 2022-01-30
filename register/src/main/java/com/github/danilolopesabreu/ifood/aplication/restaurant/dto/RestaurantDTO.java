@@ -6,8 +6,8 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
-import com.github.danilolopesabreu.ifood.aplication.dto.ValidDto;
-import com.github.danilolopesabreu.ifood.aplication.dto.ValidateDto;
+import com.github.danilolopesabreu.ifood.aplication.dto_validation.ValidDto;
+import com.github.danilolopesabreu.ifood.aplication.dto_validation.ValidateDto;
 
 @ValidateDto
 public class RestaurantDTO implements ValidDto {

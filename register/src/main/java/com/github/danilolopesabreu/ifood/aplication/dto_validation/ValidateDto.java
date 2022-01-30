@@ -1,4 +1,4 @@
-package com.github.danilolopesabreu.ifood.aplication.dto;
+package com.github.danilolopesabreu.ifood.aplication.dto_validation;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;

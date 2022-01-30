@@ -3,8 +3,8 @@ package com.github.danilolopesabreu.ifood.aplication.restaurant.dto;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
-import com.github.danilolopesabreu.ifood.aplication.dto.ValidDto;
-import com.github.danilolopesabreu.ifood.aplication.dto.ValidateDto;
+import com.github.danilolopesabreu.ifood.aplication.dto_validation.ValidDto;
+import com.github.danilolopesabreu.ifood.aplication.dto_validation.ValidateDto;
 
 @ValidateDto
 public class LocationDTO implements ValidDto{
