@@ -1,8 +1,18 @@
 package com.github.danilolopesabreu.ifood.aplication.restaurant.dto;
 
-public class LocationDTO {
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
+import com.github.danilolopesabreu.ifood.aplication.dto.ValidDto;
+import com.github.danilolopesabreu.ifood.aplication.dto.ValidateDto;
+
+@ValidateDto
+public class LocationDTO implements ValidDto{
+
+	@NotNull
 	private Double latitude;
+	
+	@NotNull
 	private Double longitude;
 
 	public Double getLatitude() {

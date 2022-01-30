@@ -17,8 +17,12 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import org.eclipse.microprofile.openapi.annotations.media.Content;
+import org.eclipse.microprofile.openapi.annotations.media.Schema;
+import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 
+import com.github.danilolopesabreu.ifood.aplication.exception.constraintviolation.ConstraintViolationResponse;
 import com.github.danilolopesabreu.ifood.aplication.restaurant.dto.DishDTO;
 import com.github.danilolopesabreu.ifood.aplication.restaurant.dto.RestaurantDTO;
 import com.github.danilolopesabreu.ifood.aplication.restaurant.mapper.DishMapper;
@@ -48,6 +52,8 @@ public class RestaurantResource {
 	
 	@POST
 	@Transactional
+	@APIResponse(responseCode = "201", description = "Restaurant Successfully Registered")
+	@APIResponse(responseCode = "400", content = @Content(schema = @Schema(allOf = ConstraintViolationResponse.class)))
 	public void create(@Valid final RestaurantDTO dto) {
 		final Restaurant objRestaurant = this.restaurantMapper.toRestaurant(dto);
 		objRestaurant.referenceRestaurantLocation();
