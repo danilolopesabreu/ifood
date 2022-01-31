@@ -31,6 +31,7 @@ public class RestaurantDTO implements ValidDto {
 	@Override
 	public boolean isValid(ConstraintValidatorContext constraintValidatorContext) {
 		//return ValidDto.super.isValid(constraintValidatorContext);
+		constraintValidatorContext.disableDefaultConstraintViolation();
 		if(this.fein.equals("66")) {
 			constraintValidatorContext
 				.buildConstraintViolationWithTemplate("The FEIN already exists.")

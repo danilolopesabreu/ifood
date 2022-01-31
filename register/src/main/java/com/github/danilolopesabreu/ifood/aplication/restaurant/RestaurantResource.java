@@ -39,16 +39,16 @@ import com.github.danilolopesabreu.ifood.infrastructure.restaurant.RestaurantPan
 public class RestaurantResource {
 
 	@Inject
-	private RestaurantMapper restaurantMapper;
+	protected RestaurantMapper restaurantMapper;
 	
 	@Inject
-	private DishMapper dishMapper;
+	protected DishMapper dishMapper;
 	
 	@Inject
-	private RestaurantPanacheRepository restaurantPanacheRepository;
+	protected RestaurantPanacheRepository restaurantPanacheRepository;
 	
 	@Inject
-	private DishPanacheRepository dishPanacheRepository;
+	protected DishPanacheRepository dishPanacheRepository;
 	
 	@POST
 	@Transactional

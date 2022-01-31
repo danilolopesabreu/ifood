@@ -1,5 +1,6 @@
 package com.github.danilolopesabreu.ifood.aplication.restaurant.dto;
 
+import javax.validation.ConstraintValidatorContext;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
@@ -29,6 +30,20 @@ public class LocationDTO implements ValidDto{
 
 	public void setLongitude(Double longitude) {
 		this.longitude = longitude;
+	}
+	
+	@Override
+	public boolean isValid(ConstraintValidatorContext constraintValidatorContext) {
+		//return ValidDto.super.isValid(constraintValidatorContext);
+		constraintValidatorContext.disableDefaultConstraintViolation();
+		if(this.longitude != null && this.longitude.equals(555D)) {
+			constraintValidatorContext
+				.buildConstraintViolationWithTemplate("Longitude is equal 555.")
+					.addPropertyNode("longitude")
+					.addConstraintViolation();
+			return false;
+		}
+		return true;
 	}
 
 }

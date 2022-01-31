@@ -15,7 +15,7 @@ import javax.validation.Payload;
 @Documented
 public @interface ValidateDto {
 	
-	String message() default "{com.github.danilolopesabreu.ifood.aplication.dto.ValidateDto.message}";
+	String message() default "{com.github.danilolopesabreu.ifood.aplication.dto_validation.ValidateDto.message}";
 
 	Class<?>[] groups() default { };
 

@@ -1,0 +1,17 @@
+restaurant:
+   - ID: 1
+     NAME: test NAME qwerty 66
+     OWNER: man in the box    
+location:
+   - RESTAURANT_ID: 1
+     LATITUDE: 10
+     LONGITUDE: 20
+dish:
+   - ID: 1
+     NAME: sushi
+     PRICE: 99
+     RESTAURANT_ID: 1
+   - ID: 2
+     NAME: beans
+     PRICE: 20
+     RESTAURANT_ID: 1    

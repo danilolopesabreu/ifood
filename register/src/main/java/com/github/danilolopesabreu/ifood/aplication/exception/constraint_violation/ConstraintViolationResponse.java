@@ -1,16 +1,19 @@
 package com.github.danilolopesabreu.ifood.aplication.exception.constraint_violation;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.validation.ConstraintViolationException;
 
 public class ConstraintViolationResponse {
 	
-	private final List<ConstraintViolationCustomImpl> violations = new ArrayList<ConstraintViolationCustomImpl>();
+	private final LinkedList<ConstraintViolationCustomImpl> violations = new LinkedList<ConstraintViolationCustomImpl>();
 	
 	private ConstraintViolationResponse(ConstraintViolationException exception) {
-		exception.getConstraintViolations().forEach(violation -> violations.add(ConstraintViolationCustomImpl.of(violation)));
+		exception.getConstraintViolations()
+					.forEach(
+							violation -> violations.add(ConstraintViolationCustomImpl.of(violation))
+						);
 	}
 	
 	public static ConstraintViolationResponse of(ConstraintViolationException exception) {
