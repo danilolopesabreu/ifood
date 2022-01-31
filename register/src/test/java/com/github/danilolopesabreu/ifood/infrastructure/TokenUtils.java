@@ -19,7 +19,6 @@ import org.jose4j.jwt.NumericDate;
 /**
  * Utilities for generating a JWT for testing
  * 
- * Peguei nesse endereço
  * https://quarkus.io/guides/security-jwt
  */
 public class TokenUtils {
