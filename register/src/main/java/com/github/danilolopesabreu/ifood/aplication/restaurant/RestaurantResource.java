@@ -18,6 +18,9 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import org.eclipse.microprofile.jwt.Claim;
+import org.eclipse.microprofile.jwt.Claims;
+import org.eclipse.microprofile.jwt.JsonWebToken;
 import org.eclipse.microprofile.openapi.annotations.enums.SecuritySchemeType;
 import org.eclipse.microprofile.openapi.annotations.media.Content;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
@@ -48,7 +51,7 @@ import com.github.danilolopesabreu.ifood.infrastructure.restaurant.RestaurantPan
 	type = SecuritySchemeType.OAUTH2, 
 	flows = @OAuthFlows(password = @OAuthFlow(tokenUrl = "http://localhost:8888/auth/realms/ifood/protocol/openid-connect/token"))
 )
-//@SecurityRequirement(name = "ifood-oauth") 
+@SecurityRequirement(name = "ifood-oauth", scopes = {}) 
 public class RestaurantResource {
 
 	@Inject
@@ -62,6 +65,14 @@ public class RestaurantResource {
 	
 	@Inject
 	protected DishPanacheRepository dishPanacheRepository;
+	
+	@Inject
+	JsonWebToken jwt;
+	
+	@Inject
+	@Claim(standard = Claims.sub)
+	String sub;
+	
 	
 	@POST
 	@Transactional
