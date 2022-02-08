@@ -1,5 +1,7 @@
 package com.github.danilolopesabreu.ifood.aplication.restaurant.dto;
 
+import java.util.List;
+
 import javax.validation.ConstraintValidatorContext;
 import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
@@ -27,6 +29,8 @@ public class RestaurantDTO implements ValidDto {
 	private LocationDTO location;
 	
 	private String creationDate;
+	
+	private List<DishDTO> dishes;
 
 	@Override
 	public boolean isValid(ConstraintValidatorContext constraintValidatorContext) {
@@ -80,6 +84,14 @@ public class RestaurantDTO implements ValidDto {
 
 	public void setCreationDate(String creationDate) {
 		this.creationDate = creationDate;
+	}
+
+	public List<DishDTO> getDishes() {
+		return dishes;
+	}
+
+	public void setDishes(List<DishDTO> dishes) {
+		this.dishes = dishes;
 	}
 
 }

@@ -13,9 +13,13 @@ import org.eclipse.microprofile.graphql.Source;
 
 import com.github.danilolopesabreu.ifood.aplication.restaurant.dto.DishDTO;
 import com.github.danilolopesabreu.ifood.aplication.restaurant.dto.RestaurantDTO;
+import com.github.danilolopesabreu.ifood.aplication.restaurant.mapper.DishMapper;
 import com.github.danilolopesabreu.ifood.aplication.restaurant.mapper.RestaurantMapper;
 import com.github.danilolopesabreu.ifood.infrastructure.restaurant.DishPanacheRepository;
 import com.github.danilolopesabreu.ifood.infrastructure.restaurant.RestaurantPanacheRepository;
+
+import io.quarkus.cache.CacheResult;
+import io.quarkus.panache.common.Parameters;
 
 @GraphQLApi
 public class RestaurantResource {
@@ -29,6 +33,9 @@ public class RestaurantResource {
 	@Inject
 	RestaurantMapper restaurantMapper;
 	
+	@Inject
+	DishMapper dishMapper;
+	
 	@Query("findRestaurants")
 	@Description("List all restaurants")
 	public List<RestaurantDTO> findRestaurants (){
@@ -37,9 +44,10 @@ public class RestaurantResource {
 	
 	@Query("findRestaurantsByDish")
 	@Description("List all restaurants by dish")
-	public List<RestaurantDTO> findRestaurantsByDish(@Source DishDTO dishDTO) {
-//		dishPanacheRepository.find("", null);
-		return null;
+	@CacheResult(cacheName = "findRestaurantsByDish")
+	public List<DishDTO> findRestaurantsByDish(@Source DishDTO dishDTO) {
+		System.out.println(dishDTO);
+		return dishMapper.fromDishes(dishPanacheRepository.find("select d from Dish d where name like :name and d.restaurant.id = restaurant.id",  Parameters.with("name", "%"+dishDTO.getName()+"%")).list());
 	}
 	
 	@Query("findRestaurantsById")

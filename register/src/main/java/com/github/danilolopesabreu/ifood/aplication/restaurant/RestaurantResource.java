@@ -45,13 +45,13 @@ import com.github.danilolopesabreu.ifood.infrastructure.restaurant.RestaurantPan
 @Tag(name="Restaurants Resources")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-@RolesAllowed("property")
-@SecurityScheme(
-	securitySchemeName = "ifood-oauth", 
-	type = SecuritySchemeType.OAUTH2, 
-	flows = @OAuthFlows(password = @OAuthFlow(tokenUrl = "http://localhost:8888/auth/realms/ifood/protocol/openid-connect/token"))
-)
-@SecurityRequirement(name = "ifood-oauth", scopes = {}) 
+//@RolesAllowed("property")
+//@SecurityScheme(
+//	securitySchemeName = "ifood-oauth", 
+//	type = SecuritySchemeType.OAUTH2, 
+//	flows = @OAuthFlows(password = @OAuthFlow(tokenUrl = "http://localhost:8888/auth/realms/ifood/protocol/openid-connect/token"))
+//)
+//@SecurityRequirement(name = "ifood-oauth", scopes = {}) 
 public class RestaurantResource {
 
 	@Inject
@@ -76,7 +76,7 @@ public class RestaurantResource {
 	
 	@POST
 	@Transactional
-	@APIResponse(responseCode = "201", description = "Restaurant Successfully Registered")
+	@APIResponse(responseCode = "201", description = "Restaurant Registered Successfully")
 	@APIResponse(responseCode = "400", content = @Content(schema = @Schema(allOf = ConstraintViolationResponse.class)))
 	public void create(@Valid final RestaurantDTO dto) {
 		final Restaurant objRestaurant = this.restaurantMapper.toRestaurant(dto);

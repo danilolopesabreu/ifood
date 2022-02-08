@@ -9,6 +9,8 @@ public class DishDTO {
 	private String description;
 
 	private BigDecimal price;
+	
+	private RestaurantDTO restaurantDTO;
 
 	public String getName() {
 		return name;
@@ -34,4 +36,18 @@ public class DishDTO {
 		this.price = price;
 	}
 
+	public RestaurantDTO getRestaurantDTO() {
+		return restaurantDTO;
+	}
+
+	public void setRestaurantDTO(RestaurantDTO restaurantDTO) {
+		this.restaurantDTO = restaurantDTO;
+	}
+
+	@Override
+	public String toString() {
+		return "DishDTO [name=" + name + ", description=" + description + ", price=" + price + ", restaurantDTO="
+				+ restaurantDTO + "]";
+	}
+	
 }
