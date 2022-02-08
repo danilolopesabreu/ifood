@@ -29,11 +29,11 @@ services:
          - "14268:14268"
          - "14269:14269"
          - "9411:9411"
-#   prometheus_ifood:
-#     container_name: prometheus_ifood
-#     image: prometheus-ifood
-#     network_mode: "host"
-#   grafana_ifood:
-#     container_name: grafana_ifood
-#     image: grafana/grafana:6.5.0
-#     network_mode: "host"    
+   prometheus_ifood:
+     container_name: prometheus_ifood
+     image: prometheus-ifood
+     network_mode: "host"
+   grafana_ifood:
+     container_name: grafana_ifood
+     image: grafana/grafana:6.5.0
+     network_mode: "host"    
