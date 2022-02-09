@@ -6,7 +6,9 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 
+import com.github.danilolopesabreu.ifood.aplication.restaurant.dto.DishDTO;
 import com.github.danilolopesabreu.ifood.aplication.restaurant.dto.RestaurantDTO;
+import com.github.danilolopesabreu.ifood.domain.restaurant.Dish;
 import com.github.danilolopesabreu.ifood.domain.restaurant.Restaurant;
 
 @Mapper(componentModel = "cdi")
@@ -21,5 +23,7 @@ public interface RestaurantMapper {
 	public RestaurantDTO toRestaurantDTO(Restaurant obj);
 	
 	public List<RestaurantDTO> toRestaurantsDTO(List<Restaurant> list);
+	
+	public DishDTO toDishDto(Dish dish);
 	
 }

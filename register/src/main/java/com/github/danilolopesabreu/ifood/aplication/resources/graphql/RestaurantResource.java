@@ -13,6 +13,7 @@ import org.eclipse.microprofile.graphql.Source;
 
 import com.github.danilolopesabreu.ifood.aplication.restaurant.dto.DishDTO;
 import com.github.danilolopesabreu.ifood.aplication.restaurant.dto.RestaurantDTO;
+import com.github.danilolopesabreu.ifood.aplication.restaurant.mapper.CycleAvoidingMappingContext;
 import com.github.danilolopesabreu.ifood.aplication.restaurant.mapper.DishMapper;
 import com.github.danilolopesabreu.ifood.aplication.restaurant.mapper.RestaurantMapper;
 import com.github.danilolopesabreu.ifood.infrastructure.restaurant.DishPanacheRepository;
@@ -33,9 +34,6 @@ public class RestaurantResource {
 	@Inject
 	RestaurantMapper restaurantMapper;
 	
-	@Inject
-	DishMapper dishMapper;
-	
 	@Query("findRestaurants")
 	@Description("List all restaurants")
 	public List<RestaurantDTO> findRestaurants (){
@@ -47,7 +45,12 @@ public class RestaurantResource {
 	@CacheResult(cacheName = "findRestaurantsByDish")
 	public List<DishDTO> findRestaurantsByDish(@Source DishDTO dishDTO) {
 		System.out.println(dishDTO);
-		return dishMapper.fromDishes(dishPanacheRepository.find("select d from Dish d where name like :name and d.restaurant.id = restaurant.id",  Parameters.with("name", "%"+dishDTO.getName()+"%")).list());
+		
+		return DishMapper.MAPPER.toDishesDtos(
+				dishPanacheRepository.find(
+						"select d from Dish d JOIN FETCH d.restaurant as r where d.name like :name",  
+						 Parameters.with("name", "%"+dishDTO.getName()+"%")).list(), new CycleAvoidingMappingContext()
+				);
 	}
 	
 	@Query("findRestaurantsById")

@@ -3,7 +3,6 @@ package com.github.danilolopesabreu.ifood.aplication.restaurant;
 import java.util.List;
 import java.util.Optional;
 
-import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
@@ -21,19 +20,15 @@ import javax.ws.rs.core.MediaType;
 import org.eclipse.microprofile.jwt.Claim;
 import org.eclipse.microprofile.jwt.Claims;
 import org.eclipse.microprofile.jwt.JsonWebToken;
-import org.eclipse.microprofile.openapi.annotations.enums.SecuritySchemeType;
 import org.eclipse.microprofile.openapi.annotations.media.Content;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
-import org.eclipse.microprofile.openapi.annotations.security.OAuthFlow;
-import org.eclipse.microprofile.openapi.annotations.security.OAuthFlows;
-import org.eclipse.microprofile.openapi.annotations.security.SecurityRequirement;
-import org.eclipse.microprofile.openapi.annotations.security.SecurityScheme;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 
 import com.github.danilolopesabreu.ifood.aplication.exception.constraint_violation.ConstraintViolationResponse;
 import com.github.danilolopesabreu.ifood.aplication.restaurant.dto.DishDTO;
 import com.github.danilolopesabreu.ifood.aplication.restaurant.dto.RestaurantDTO;
+import com.github.danilolopesabreu.ifood.aplication.restaurant.mapper.CycleAvoidingMappingContext;
 import com.github.danilolopesabreu.ifood.aplication.restaurant.mapper.DishMapper;
 import com.github.danilolopesabreu.ifood.aplication.restaurant.mapper.RestaurantMapper;
 import com.github.danilolopesabreu.ifood.domain.restaurant.Dish;
@@ -127,7 +122,7 @@ public class RestaurantResource {
 			throw new NotFoundException("Restaurant Not Found");
 		}
 		
-		return this.dishMapper.fromDishes(restaurantOp.get().getDishes());
+		return this.dishMapper.toDishesDtos(restaurantOp.get().getDishes(), new CycleAvoidingMappingContext());
 	}
 	
 	@POST
@@ -141,7 +136,7 @@ public class RestaurantResource {
 			throw new NotFoundException("Restaurant Not Found");
 		}
 		
-		Dish objDish = dishMapper.toDish(dto);
+		Dish objDish = dishMapper.toDish(dto, new CycleAvoidingMappingContext());
 		
 		objDish.setRestaurant(restaurantOp.get());
 		this.dishPanacheRepository.persist(objDish);
