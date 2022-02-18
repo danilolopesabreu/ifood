@@ -10,6 +10,7 @@ import org.eclipse.microprofile.graphql.Mutation;
 import org.eclipse.microprofile.graphql.Name;
 import org.eclipse.microprofile.graphql.Query;
 import org.eclipse.microprofile.graphql.Source;
+import org.mapstruct.Context;
 
 import com.github.danilolopesabreu.ifood.aplication.restaurant.dto.DishDTO;
 import com.github.danilolopesabreu.ifood.aplication.restaurant.dto.RestaurantDTO;
@@ -34,10 +35,13 @@ public class RestaurantResource {
 	@Inject
 	RestaurantMapper restaurantMapper;
 	
+	@Inject
+	DishMapper dishMapper;
+	
 	@Query("findRestaurants")
 	@Description("List all restaurants")
 	public List<RestaurantDTO> findRestaurants (){
-		return restaurantMapper.toRestaurantsDTO(restaurantPanacheRepository.listAll());
+		return restaurantMapper.toRestaurantsDTO(restaurantPanacheRepository.listAll(), new CycleAvoidingMappingContext());
 	}
 	
 	@Query("findRestaurantsByDish")
@@ -46,7 +50,7 @@ public class RestaurantResource {
 	public List<DishDTO> findRestaurantsByDish(@Source DishDTO dishDTO) {
 		System.out.println(dishDTO);
 		
-		return DishMapper.MAPPER.toDishesDtos(
+		return dishMapper.toDishesDtos(
 				dishPanacheRepository.find(
 						"select d from Dish d JOIN FETCH d.restaurant as r where d.name like :name",  
 						 Parameters.with("name", "%"+dishDTO.getName()+"%")).list(), new CycleAvoidingMappingContext()
@@ -56,7 +60,7 @@ public class RestaurantResource {
 	@Query("findRestaurantsById")
 	@Description("List one restaurant by id")
 	public RestaurantDTO findRestaurantsById(@Name("idRestaurant") Long idRestaurant) {
-		return restaurantMapper.toRestaurantDTO(restaurantPanacheRepository.findById(idRestaurant));
+		return restaurantMapper.fromRestaurantDTO(restaurantPanacheRepository.findById(idRestaurant), new CycleAvoidingMappingContext());
 	}
 	
 	@Mutation
