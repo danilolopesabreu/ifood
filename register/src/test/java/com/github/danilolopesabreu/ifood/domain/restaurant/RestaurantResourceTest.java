@@ -47,5 +47,19 @@ class RestaurantResourceTest {
 		
 		Approvals.verifyJson(result);
 	}
+	
+	@Test
+	void testCreateRestaurant() {
+		
+//		RestaurantDTO newRestaurant = new RestaurantDTO("Mr. Smith","66","Sushi Bar", new LocationDTO(6669D, 6688D));
+		
+		String result = 
+					given()
+						.when().get("/restaurants")
+						.then().statusCode(200)
+						.extract().asString();
+		
+		Approvals.verifyJson(result);
+	}
 
 }

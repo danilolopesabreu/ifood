@@ -1,7 +1,7 @@
 restaurant:
    - ID: 1
      NAME: test NAME qwerty 66
-     OWNER: man in the box    
+     OWNER: man in the box         
 location:
    - RESTAURANT_ID: 1
      LATITUDE: 10
