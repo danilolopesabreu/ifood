@@ -8,6 +8,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.github.danilolopesabreu.ifood.aplication.dto_validation.ValidDto;
 import com.github.danilolopesabreu.ifood.aplication.dto_validation.ValidateDto;
 
@@ -30,7 +31,24 @@ public class RestaurantDTO implements ValidDto {
 	
 	private String creationDate;
 	
+//	@JsonbTransient
+	@JsonBackReference
 	private List<DishDTO> dishes;
+	
+//	public RestaurantDTO() {
+//	}
+	
+//	@Valid
+//	public RestaurantDTO(
+//			@NotEmpty String owner,
+//			@NotEmpty @Pattern(regexp = "[0-9]{2}", message = "Wrong format") String fein,
+//			@Size(min = 3, max = 30) @NotEmpty String name, @Valid LocationDTO location) {
+//		super();
+//		this.owner = owner;
+//		this.fein = fein;
+//		this.name = name;
+//		this.location = location;
+//	}
 
 	@Override
 	public boolean isValid(ConstraintValidatorContext constraintValidatorContext) {

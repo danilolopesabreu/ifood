@@ -2,6 +2,10 @@ package com.github.danilolopesabreu.ifood.aplication.restaurant.dto;
 
 import java.math.BigDecimal;
 
+import javax.json.bind.annotation.JsonbTransient;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 public class DishDTO {
 
 	private String name;
@@ -10,6 +14,8 @@ public class DishDTO {
 
 	private BigDecimal price;
 	
+	@JsonManagedReference
+	@JsonbTransient
 	private RestaurantDTO restaurant;
 
 	public String getName() {
