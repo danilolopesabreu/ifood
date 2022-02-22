@@ -32,8 +32,36 @@ services:
    prometheus_ifood:
      container_name: prometheus_ifood
      image: prometheus-ifood
-     network_mode: "host"
+ #    network_mode: "host"
+     ports:
+        - "9090:9090"    
    grafana_ifood:
      container_name: grafana_ifood
      image: grafana/grafana:6.5.0
-     network_mode: "host"    
+ #    network_mode: "host"    
+     ports:
+        - "3000:3000"     
+   artemis_ifood:
+     container_name: artemis_ifood
+     image: vromero/activemq-artemis:2.11.0
+#    network_mode: "host"
+     ports:
+         - "8161:8161"    
+     environment: 
+         ARTEMIS_USERNAME: admin
+         ARTEMIS_PASSWORD: admin      
+#   artemis_ifood:
+##     image: quay.io/artemiscloud/activemq-artemis-broker:0.1.2
+#     ports:
+##       - "8161:8161"
+#       - "61616:61616"
+#       - "5672:5672"
+#     environment:
+#       AMQ_USER: admin
+#       AMQ_PASSWORD: admin
+   marketplace_ifood:
+     container_name: marketplace_ifood
+     image: quarkus/marketplace
+   register_ifood:
+     container_name: register_ifood
+     image: quarkus/register         
