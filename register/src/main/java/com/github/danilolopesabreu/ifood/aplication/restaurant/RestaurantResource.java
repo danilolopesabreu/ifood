@@ -24,6 +24,8 @@ import org.eclipse.microprofile.openapi.annotations.media.Content;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
+import org.eclipse.microprofile.reactive.messaging.Channel;
+import org.eclipse.microprofile.reactive.messaging.Emitter;
 
 import com.github.danilolopesabreu.ifood.aplication.exception.constraint_violation.ConstraintViolationResponse;
 import com.github.danilolopesabreu.ifood.aplication.restaurant.dto.DishDTO;
@@ -36,6 +38,12 @@ import com.github.danilolopesabreu.ifood.domain.restaurant.Restaurant;
 import com.github.danilolopesabreu.ifood.infrastructure.restaurant.DishPanacheRepository;
 import com.github.danilolopesabreu.ifood.infrastructure.restaurant.RestaurantPanacheRepository;
 
+import io.smallrye.reactive.messaging.annotations.Broadcast;
+
+// TODO: Auto-generated Javadoc
+/**
+ * The Class RestaurantResource.
+ */
 @Path("/restaurants")
 @Tag(name="Restaurants Resources")
 @Produces(MediaType.APPLICATION_JSON)
@@ -49,41 +57,72 @@ import com.github.danilolopesabreu.ifood.infrastructure.restaurant.RestaurantPan
 //@SecurityRequirement(name = "ifood-oauth", scopes = {}) 
 public class RestaurantResource {
 
+	/** The restaurant mapper. */
 	@Inject
 	protected RestaurantMapper restaurantMapper;
 	
+	/** The dish mapper. */
 	@Inject
 	protected DishMapper dishMapper;
 	
+	/** The restaurant panache repository. */
 	@Inject
 	protected RestaurantPanacheRepository restaurantPanacheRepository;
 	
+	/** The dish panache repository. */
 	@Inject
 	protected DishPanacheRepository dishPanacheRepository;
 	
+	/** The jwt. */
 	@Inject
 	JsonWebToken jwt;
 	
+	/** The sub. */
 	@Inject
 	@Claim(standard = Claims.sub)
 	String sub;
 	
 	
+	@Inject
+	@Channel("REQ_restaurant")
+	Emitter<RestaurantDTO> emitterRestaurant;
+	
+	/**
+	 * Creates the.
+	 *
+	 * @param dto the dto
+	 */
 	@POST
 	@Transactional
 	@APIResponse(responseCode = "201", description = "Restaurant Registered Successfully")
 	@APIResponse(responseCode = "400", content = @Content(schema = @Schema(allOf = ConstraintViolationResponse.class)))
 	public void create(@Valid final RestaurantDTO dto) {
-		final Restaurant objRestaurant = this.restaurantMapper.toRestaurant(dto);
+		final Restaurant objRestaurant = this.restaurantMapper.fromRestaurant(dto);
 		objRestaurant.referenceRestaurantLocation();
 		restaurantPanacheRepository.persist(objRestaurant);
+		emitterRestaurant.send(dto);
 	}
 	
+	/**
+	 * Read.
+	 *
+	 * @return the list
+	 */
 	@GET
 	public List<RestaurantDTO> read() {
-		return this.restaurantMapper.toRestaurantsDTO(restaurantPanacheRepository.listAll());
+		return this.restaurantMapper.toRestaurantsDTO(
+				restaurantPanacheRepository.list(
+						"select r from Restaurant r "
+						+ "	join fetch r.dishes "
+						+ "	join fetch r.location"), new CycleAvoidingMappingContext());
 	}
 	
+	/**
+	 * Update.
+	 *
+	 * @param id the id
+	 * @param dto the dto
+	 */
 	@PUT
 	@Path("{id}")
 	@Transactional
@@ -102,6 +141,11 @@ public class RestaurantResource {
 		restaurantPanacheRepository.persist(objRestaurant);		
 	}
 	
+	/**
+	 * Delete.
+	 *
+	 * @param id the id
+	 */
 	@DELETE
 	@Path("{id}")
 	@Transactional
@@ -111,6 +155,12 @@ public class RestaurantResource {
 		}
 	}
 	
+	/**
+	 * Read dishes.
+	 *
+	 * @param idRestaurant the id restaurant
+	 * @return the list
+	 */
 	@GET
 	@Path("{idRestaurant}/dishes")
 	@Transactional
@@ -125,6 +175,12 @@ public class RestaurantResource {
 		return this.dishMapper.toDishesDtos(restaurantOp.get().getDishes(), new CycleAvoidingMappingContext());
 	}
 	
+	/**
+	 * Creates the dish.
+	 *
+	 * @param idRestaurant the id restaurant
+	 * @param dto the dto
+	 */
 	@POST
 	@Path("{idRestaurant}/dishes")
 	@Transactional
@@ -143,6 +199,12 @@ public class RestaurantResource {
 		
 	}
 	
+	/**
+	 * Delete dish.
+	 *
+	 * @param idRestaurant the id restaurant
+	 * @param idDish the id dish
+	 */
 	@DELETE
 	@Path("{idRestaurant}/dishes/{id}")
 	@Transactional
@@ -153,6 +215,14 @@ public class RestaurantResource {
 		}
 	}
 	
+	
+	/**
+	 * Update dish.
+	 *
+	 * @param idRestaurant the id restaurant
+	 * @param idDish the id dish
+	 * @param dto the dto
+	 */
 	@PUT
 	@Path("{idRestaurant}/dishes/{id}")
 	@Transactional
