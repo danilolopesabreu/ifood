@@ -12,6 +12,7 @@ import com.github.danilolopesabreu.ifood.domain.restaurant.Dish;
 @Mapper(componentModel = "cdi")
 public interface DishMapper {
 	
+	/* https://stackoverflow.com/a/45653375/10634747 */
 	DishMapper MAPPER = Mappers.getMapper( DishMapper.class );
 
 	public Dish toDish(DishDTO dto, @Context CycleAvoidingMappingContext context);
