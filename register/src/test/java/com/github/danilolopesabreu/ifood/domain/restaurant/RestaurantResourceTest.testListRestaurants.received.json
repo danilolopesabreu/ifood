@@ -1,0 +1,38 @@
+[
+  {
+    "dishes": [
+      {
+        "name": "beans",
+        "price": 20.00
+      },
+      {
+        "name": "sushi",
+        "price": 99.00
+      }
+    ],
+    "location": {
+      "latitude": 10.0,
+      "longitude": 20.0
+    },
+    "name": "test NAME qwerty 66",
+    "owner": "man in the box"
+  },
+  {
+    "dishes": [
+      {
+        "name": "beans",
+        "price": 20.00
+      },
+      {
+        "name": "sushi",
+        "price": 99.00
+      }
+    ],
+    "location": {
+      "latitude": 10.0,
+      "longitude": 20.0
+    },
+    "name": "test NAME qwerty 66",
+    "owner": "man in the box"
+  }
+]
