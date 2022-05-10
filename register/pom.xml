@@ -8,6 +8,7 @@
     <version>0.0.1-SNAPSHOT</version>
   </parent>
   <artifactId>register</artifactId>
+  <version>1.0.1</version>
   <dependencyManagement>
     <dependencies>
       <dependency>
